@@ -19,6 +19,12 @@ o acompanhamento de quais produtos estão à venda e quais já foram vendidos, a
 
 
 \- **Java**
-
+\- **Java Swing**
 \- **MySQL**
+\- **MySQL**
+\- **NetBeans IDE**
+\- **Git**
+\- **GitHub**
+
+
 
