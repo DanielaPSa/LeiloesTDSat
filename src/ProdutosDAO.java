@@ -93,8 +93,93 @@ public class ProdutosDAO {
     }
     
             
-         
+    public boolean venderProduto(int id) { 
+        
+        boolean sucesso = false;
+        
+        try { 
+             
+            conn = new conectaDAO().connectDB();
+            String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
+            prep.setInt(2, id);
+            prep.executeUpdate();
+            
+            sucesso = true;
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao vender: " + e.getMessage());
+                    
+        } finally {
+            
+            try { 
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+                
+            } catch (Exception e) {
+            }
+            
+        }
+        
+        return sucesso;
     }
+    
+            
+     public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+         
+         listagem = new ArrayList<>();
+         
+         try { 
+             conn = new conectaDAO().connectDB();
+             
+             String sql = "SELECT * FROM produtos WHERE  status = ?";
+             prep = conn.prepareStatement(sql);
+             prep.setString(1, "Vendido");
+             
+             resulset = prep.executeQuery();
+             
+             while(resulset.next()){
+                 
+                 ProdutosDTO produto = new ProdutosDTO();
+                 
+                 produto.setId(resulset.getInt("id"));
+                 produto.setNome(resulset.getString("nome"));
+                 produto.setValor(resulset.getInt("valor"));
+                 produto.setStatus(resulset.getString("status"));
+                 
+                 listagem.add(produto);
+                 
+             }
+             
+             } catch(Exception e){ 
+                     JOptionPane.showMessageDialog(null,
+                             "Erro ao listar produtos vendidos: " + e.getMessage());
+                     
+                     } finally {
+                             
+                             try {
+                                 if (prep != null) prep.close();
+                                 if (conn != null) conn.close();
+                                 
+                             } catch (Exception e){
+                                 
+                             }
+                             
+                             }
+         
+                     return listagem;
+                     
+     }
+         
+}
+            
+        
+    
+         
+    
     
 
 
